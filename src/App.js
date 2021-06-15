@@ -1,23 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { useEffect, useState } from "react";
+
+function toCelsius(fahrenheit, setTemperature) {
+  let res = ((fahrenheit - 32) * 5) / 9;
+  setFahrenhite(res);
+}
+
+function toFahrenheit(celsius, setTemperature) {
+  let res = (celsius * 9) / 5 + 32;
+  setCelcius(res);
+}
+
+function convertTemperature(temp, scale, setTemperature) {
+  if (scale === "f") {
+    toFahrenheit(temp, setTemperature);
+  } else if (scale === "c") {
+    toCelsius(temp, setTemperature);
+  } else {
+    console.log("No scale mentioned");
+  }
+}
+
+function TemperationConverter({ value, scale, setTemperature }) {
+  return (
+    <div>
+      <input
+        value={value}
+        onChange={(e) =>
+          convertTemperature(e.target.value, scale, setTemperature)
+        }
+      />
+    </div>
+  );
+}
 
 function App() {
+  const [temperature, setTemperature] = useState(0);
+  const [fahrenheit, setFahrenhite] = useState(0);
+  const [celcius, setCelcius] = useState(0);
+
+  useEffect(() => {}, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TemperationConverter
+        value={celcius}
+        scale="f"
+        setFahrenhite={setFahrenhite}
+      />
+      <TemperationConverter
+        value={fahrenheit}
+        scale="c"
+        setCelcius={setCelcius}
+      />
     </div>
   );
 }
